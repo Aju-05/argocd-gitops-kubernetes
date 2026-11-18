@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sample-service-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Aju-05/argocd-gitops-kubernetes.git
+    targetRevision: main
+    path: apps/sample-service/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: sample-dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
